@@ -82,33 +82,6 @@ function move(field, row, col, who) {
     return true;
 }
 
-function gameOver(msg, field, winner) {
-    setTimeout(() => {
-        alert(msg);
-        // clear field value
-        for (let x = 0; x < 3; x++) {
-            for (let y=0; y < 3; y++) {
-                let e = field[x][y];
-                e.value = empty;
-                e.element.innerHTML = "";
-            }
-        }
-        // check if it is a draw case, if draw winner will be undefined
-        if (winner !== undefined) {
-            // update score board
-            switch (winner) {
-                case player:
-                    document.querySelector(".player-1-score").innerHTML = 
-                        parseInt(document.querySelector(".player-1-score").innerHTML) + 1;
-                    break;
-                default:
-                    document.querySelector(".player-2-score").innerHTML = 
-                        parseInt(document.querySelector(".player-2-score").innerHTML) + 1;
-            }
-        }
-    }, 100)
-}
-
 // return all valid moves left in the field, ex: [{row: 0, col: 1}, {row: 0, col: 2}]
 function validMoves(field) {
     let moves = [];
@@ -144,6 +117,19 @@ function findBestMove(field, player) {
     return res[0];
 }
 
+function aiMove(field) {
+    let m = findBestMove(field, ai).move;
+    if (!m) {
+        gameOver("Draw!", field);
+        return;
+    }
+    // Delay AI move
+    setTimeout(() => {
+        move(field, m.row, m.col, ai);
+        wins(field, ai) && gameOver("AI won!", field, ai);
+    }, 150)
+}
+
 function wins(field, who) {
     function lineWins(row, col, dx, dy) {
         let a = field[col][row].value, b = field[col + dy][row + dx].value,
@@ -159,14 +145,32 @@ function wins(field, who) {
     return lineWins(0, 0, 1, 1) || lineWins(2, 0, -1, 1);
 }
 
-function aiMove(field) {
-    let m = findBestMove(field, ai).move;
-    if (!m) {
-        gameOver("Draw!", field);
-        return;
-    }
-    move(field, m.row, m.col, ai);
-    wins(field, ai) && gameOver("AI won!", field, ai);
+function gameOver(msg, field, winner) {
+    setTimeout(() => {
+        alert(msg);
+        // clear field value
+        for (let x = 0; x < 3; x++) {
+            for (let y=0; y < 3; y++) {
+                let e = field[x][y];
+                e.value = empty;
+                e.element.innerHTML = "";
+            }
+        }
+        // check if it is a draw case, if draw winner will be undefined
+        if (winner !== undefined) {
+            // update score board
+            switch (winner) {
+                case player:
+                    document.querySelector(".player-1-score").innerHTML = 
+                        parseInt(document.querySelector(".player-1-score").innerHTML) + 1;
+                    break;
+                default:
+                    document.querySelector(".player-2-score").innerHTML = 
+                        parseInt(document.querySelector(".player-2-score").innerHTML) + 1;
+            }
+        }
+        window.currentPlayer = player;
+    }, 100)
 }
 
 run();
