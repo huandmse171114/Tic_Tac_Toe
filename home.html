@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="assets/css/base.css">
+        <link rel="stylesheet" href="assets/css/home.css">
+        <title>Tic Tac Toe</title>
+    </head>
+    <body>
+        <div id="app">
+            <table id="score-board">
+                <tr>
+                    <th>Player 1</th>
+                    <th class="player-2-heading">Computer</th>
+                </tr>
+                <tr>
+                    <td class="player-score player-1-score">0</td>
+                    <td class="player-score player-2-score">0</td>
+                </tr>
+            </table>
+            <div class="container full-h">
+                <h1 class="heading">Tic Tac Toe Online</h1>
+                <table class="table" id="table"></table>
+                <ul class="game-mode-list">
+                    <li class="game-mode-item active">
+                        1 Player
+                    </li>
+                    <li class="game-mode-item">
+                        2 Player
+                    </li>
+                </ul>
+            </div>
+            <a href="index.html" class="redirect-btn btn btn-primary">
+                Back
+            </a>
+        </div>
+        <script src="assets/js/home.js"></script>
+    </body>
+</html>

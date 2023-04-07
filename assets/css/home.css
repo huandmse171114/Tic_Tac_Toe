@@ -1,0 +1,67 @@
+#score-board {
+    position: absolute;
+    right: 50px;
+    top: 50px;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+#score-board td {
+    padding: 16px;
+    font-size: 4rem;
+    color: var(--primary);
+    width: 200px;
+} 
+#score-board th {
+    padding: 16px;
+    font-size: 4rem;
+    color: var(--text);
+}
+
+#score-board th:not(:last-child) {
+    border-bottom: 1px solid var(--text);
+    border-right: 1px solid var(--text);
+}
+
+#score-board th:last-child {
+    border-bottom: 1px solid var(--text);
+}
+
+#score-board td:not(:last-child) {
+    border-right: 1px solid var(--text);
+}
+
+#table {
+    font-family: 'Londrina Outline', cursive;
+}
+
+.cell {
+    width: 2em;
+    height: 2em;
+    font-size: 8.5rem;
+    color: var(--primary);
+    border: solid var(--primary);
+    text-align: center;
+}
+
+.game-mode-list {
+    margin-top: 60px;
+    display: flex;
+    column-gap: 40px;
+    font-size: var(--subheading-fs);
+}
+
+.game-mode-item {
+    transition: all 0.5s;
+    color: var(--text);
+}
+
+.game-mode-item.active {
+    color: var(--primary);
+}
+
+.game-mode-item:hover {
+    color: var(--primary);
+    cursor: pointer;
+}
+
