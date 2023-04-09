@@ -92,7 +92,7 @@ function validMoves(field) {
     return moves;
 }
 
-// based on the Minimax algorithm, return the score of the current state of field
+// based on the Minimax algorithm, return the score and next move of the current state of field
 function findBestMove(field, who) {
     // player = 1, ai = -1 => ai = -player && player = -ai, can also think as player is Max node and ai is Min node in Minimax algorithm
     if (wins(field, who)) return {score: who} //base case: who won, return 1
