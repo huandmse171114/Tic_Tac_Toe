@@ -73,7 +73,6 @@ function twoPlayerMove(field, row, col) {
     }
 }
 
-
 function move(field, row, col, who) {
     let e = field[col][row];
     if (e.value !== empty) return false;
@@ -93,28 +92,30 @@ function validMoves(field) {
     return moves;
 }
 
-// based on the Minimax algorithm
-function findBestMove(field, player) {
-    // player = 1, ai = -1 => ai = -player && player = -ai
-    if (wins(field, player)) return {score: player}
-    if (wins(field, -player)) return {score: -player}
-    let moves = validMoves(field); 
-    if (moves.length === 0) return {score: 0}
-    let res = [];
+// based on the Minimax algorithm, return the score of the current state of field
+function findBestMove(field, who) {
+    // player = 1, ai = -1 => ai = -player && player = -ai, can also think as player is Max node and ai is Min node in Minimax algorithm
+    if (wins(field, who)) return {score: who} //base case: who won, return 1
+    if (wins(field, -who)) return {score: -who} //base case: who lose, return -1
+    let moves = validMoves(field); //find all empty position in field === all posible child node 
+    // current field state can be seen as parent node and every posible next move to create new state of the field is called child node
+    if (moves.length === 0) return {score: 0} //base case: draw, return 0
+    let res = []; 
     for (let i = 0; i < moves.length; i++) {
         let m = moves[i];
         let e = field[m.col][m.row];
-        e.value = player;
-        let r = findBestMove(field, -player);
+        e.value = who;
+        let r = findBestMove(field, -who);
         r.move = m;
         res.push(r);
-        e.value = empty;
+        e.value = empty; //clear cell value after calculating score
     }
-    //    
+    // ascending order if who is AI or -1, descending order if who is player or 1
     res.sort((a, b) => {
-        return (b.score - a.score)*player;
+        return (b.score - a.score)*who;
     })
-    return res[0];
+    console.log(res);
+    return res[0]; //get the highest or lowest score move
 }
 
 function aiMove(field) {
@@ -138,10 +139,10 @@ function wins(field, who) {
     }
 
     for (let i = 0; i < 3; i++) {
-        // lineWins(0, i, 1, 0) : checking column's cell value, lineWins(i, 0, 0, 1): checking row's cell value
+        // lineWins(0, i, 1, 0) : checking column's cells value, lineWins(i, 0, 0, 1): checking row's cells value
         if (lineWins(0, i, 1, 0) || lineWins(i, 0, 0, 1)) return true;
     }
-    // lineWins(0, 0, 1, 1): checking \ line's cell value, lineWins(2, 0, -1, 1): checking / line's cell value
+    // lineWins(0, 0, 1, 1): checking \ line's cells value, lineWins(2, 0, -1, 1): checking / line's cells value
     return lineWins(0, 0, 1, 1) || lineWins(2, 0, -1, 1);
 }
 
