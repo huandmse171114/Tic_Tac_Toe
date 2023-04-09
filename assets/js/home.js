@@ -22,7 +22,7 @@ gameModeSelections.forEach(mode => {
 })
 
 function run() {
-    console.log('Run function');
+    // console.log('Run function');
     let field = [];
     let table = document.getElementById("table");
     table.innerHTML = ''; 
@@ -114,7 +114,7 @@ function findBestMove(field, who) {
     res.sort((a, b) => {
         return (b.score - a.score)*who;
     })
-    console.log(res);
+    // console.log(res);
     return res[0]; //get the highest or lowest score move
 }
 
